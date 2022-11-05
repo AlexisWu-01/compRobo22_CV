@@ -1,6 +1,6 @@
 # Computer Vision -- Hand Gesture Recognition:
-> Author: Alexis Wu
-> Nov. 2022
+>  Author: Alexis Wu
+>  Nov. 2022
 - All source code can be found at https://github.com/AlexisWu-01/compRobo22_comuter_vision
 ---
 ## Introduction
@@ -10,9 +10,9 @@ The main project goal was to build up a model that could recognize hand gestures
 ### Learning Goal
 I wanted to learn more about machine learning, especially computer vision. Therefore this project was more focused on the application of computer vision rather than robot interaction like in previous projects. Computer vision neural networks are large and hard to train because of the need for a huge database. Therefore I utilized transfer learning with various available pretained models and different preprocessing images.
 
-### Data Preparation
+## Data Preparation
 I used the onboard camera from neato and the webcam from my laptop with openCV to record videos with different hand gestures and save the frames as the training, validation, and test datasets.
-#### Image Recording
+### Image Recording
 I recorded a series of images from the webcam with 4 poses: `['come', 'left', 'right', 'stop']`, each with approximately 1000 images. 
 Photo taken from webcam:
 
@@ -23,44 +23,44 @@ Photo taken from neato:
 ![Neato images](https://github.com/AlexisWu-01/compRobo22_comuter_vision/blob/main/demo/neato.png)
 
 The webcam set works better due to resolution and lighting conditions.
-#### Image Preprocessing
+### Image Preprocessing
 I tried various ways for image preprocessing, some of them help and some do not.
-##### Data Augmentation
+#### Data Augmentation
 The most crucial one was to use data augmentation to reduce overfitting and increase sample diversity for this small-size dataset. I added random rotation and vertical flip to the dataset. (There was no horizontal flip as standard data augmentation because it would confuse the left/right category).
-##### Train with Original Dataset
+#### Train with Original Dataset
 The original dataset did not work well with overfitting (Extremely high accuracy in training but poor test accuracy.) because there were too many distractions and noises in the background.  Therefore, I tried several ways to reduce noise or only keep important information.
-##### Edge Detection
+#### Edge Detection
 I tried to use edge detection to move away the distraction from colors and background. Even though the resulting image looks good before compression, this does not work well because the resolution is even worse after reshaping and the "single line" edges:
 
 ![Edge Detection](https://github.com/AlexisWu-01/compRobo22_comuter_vision/blob/main/demo/original_edge.png)
 
-##### Binary Filter
+#### Binary Filter
 The technique with binary image was to remove everything else but pixels with my skin-like color. This significantly reduces unnecessary information but the potential problem is consistency with users of different skin tones or even a similar background color could confuse the model.
 
  ![Binary Filter](https://github.com/AlexisWu-01/compRobo22_comuter_vision/blob/main/demo/binary.png)
  
-##### Edge Detection  with Binary Image
+#### Edge Detection  with Binary Image
 I then tried combining edge detection on the binary image.
 It works slightly better than applying edge detection to the original image, but not as well as the binary image
 
 ![Edge Detection on Binary Image](https://github.com/AlexisWu-01/compRobo22_comuter_vision/blob/main/demo/binary_edge.png)
 
 
-### Model with Transfer Learning
+## Model with Transfer Learning
 I used pre-trained models provided by TensorFlow as the base model for transfer learning. 
-#### How transfer learning works
+### How transfer learning works
 We use a pre-trained model with classification ability and make it learn to classify images of our own classes. Transfer learning is widely used in the field of computer vision (especially image classification), natural language processing, and speech recognition. They could boost performance for a small dataset with specific tasks.
 
-#### Base Model
+### Base Model
 I tried using MobileNet_v3, inception_v3, and inception_v2_resnet as base models and inception_v2_resnet produced the best result using the same datasets. This might be because this model has the largest network. 
 
-##### Feature Extraction
+#### Feature Extraction
 I started with a frozen base model without its output layer and added a few output layers: global average pooling to convert the features of each image to one single column vector, a random dropout layer to prevent overfitting, and a dense layer to produce a prediction vector for each image (possibilities for 4 classes, and we take the class with the highest score as the predicted class). We could see after 10 training epochs, both the training and validation accuracy improved, which means that the output layer is learning to classify the images:
 
 ![Training Output Layer Only](https://github.com/AlexisWu-01/compRobo22_comuter_vision/blob/main/demo/initial_outcome.png)
 
 
-##### Fine Tuning
+#### Fine Tuning
 To further improve the model performance, we could modify the base model with limited variations to not mess up the whole pre-trained model:
 We first started by only training the first 100 layers of the base model with 130 trainable variables. To prevent exploding gradients, we decrease the learning rate by a factor of 10.
 The performance significantly improved with fine-tuning.
@@ -69,7 +69,7 @@ In model training, I noticed that too few layers (50 out of 300 layers with arou
 both the trainable layer number and variables around 100 yields a balanced result.
 
 
-#### More on Inception_resnet_v2
+### More on Inception_resnet_v2
 Inception_resnet_v2 is a newer model published in 2017 based on inception architecture with integrated residual connections. Therefore it combines multiple-sized convolutional filters with residual connections which could avoid the degradation problem (The problem that deeper networks should allow a higher level of feature learning but instead causes more error.) and allow lower training time. 
 
 ![Overview of Inception_Resnet_v2](https://github.com/AlexisWu-01/compRobo22_comuter_vision/blob/main/demo/inception_resnet_view.png )
