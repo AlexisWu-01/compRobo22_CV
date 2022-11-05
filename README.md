@@ -129,3 +129,19 @@ Even though the model training process was time consuming and a little boring, I
 		- ReLU has faster convergence speed because it has no exponential terms and a fixed derivative.
 		- Drawbacks:
 			- Dying ReLu problem because of the 0 value.
+## Lessons Learned and Future Improvements
+### Model vs. Ros Implementation
+Even though my main focus was computer vision model since the very begining, I still wanted some implementation with ros because of the nature of this class. However, making changes in machine learning is not like other programming where you could see the result of the change immediately after you make it. It takes almost 1 hours to train a single model (much much longer in google colab) and during that time I could barely do any other things because the laptop might just crash.  I'm glad I was still able to take some basic interaction about vision from neato by taking photos from it. 
+
+In the future if I were to implement some computer vision project, I would get a remote GPU server for everything to run more quickly and without sacrificing my time to the intense computation.  There are so many things that could be done with a moving robot that can see.
+
+### Object Tracking
+I wanted to achieve the pose tracking algorithm as in mediapipe: 
+
+![mediapipe hand](https://github.com/AlexisWu-01/compRobo22_comuter_vision/blob/main/demo/handpose_demo.png)
+
+However, I could not find pretrained model for such pose detections. If there were more time I would try to build and train an object tracking machine learning model. 
+
+
+## Deep learning could be not as fancy as it sounds (Tuning vs Creating Model)
+I wanted to learn more about theories and math behind the neural networks but could not realize this with transfer learning even though it provides a much better result in an engineering outcome aspect. The main working flow was finding some APIs, then look into its codes and function, learn about different parameters and see their impact on the output. The waiting for an outcome can be boring but I was still glad to learn so much about openCV implementations and building up model from tensorflow.
