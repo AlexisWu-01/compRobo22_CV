@@ -52,7 +52,7 @@ I used pre-trained models provided by TensorFlow as the base model for transfer 
 We use a pre-trained model with classification ability and make it learn to classify images of our own classes. Transfer learning is widely used in the field of computer vision (especially image classification), natural language processing, and speech recognition. They could boost performance for a small dataset with specific tasks.
 
 ### Base Model
-I tried using MobileNet_v3, inception_v3, and inception_v2_resnet as base models and inception_v2_resnet produced the best result using the same datasets. This might be because this model has the largest network. 
+I tried using MobileNet_v3, inception_v3, and inception_resnet_v2 as base models and inception_resnet_v2 produced the best result using the same datasets. This might be because this model has the largest network. 
 
 #### Feature Extraction
 I started with a frozen base model without its output layer and added a few output layers: global average pooling to convert the features of each image to one single column vector, a random dropout layer to prevent overfitting, and a dense layer to produce a prediction vector for each image (possibilities for 4 classes, and we take the class with the highest score as the predicted class). We could see after 10 training epochs, both the training and validation accuracy improved, which means that the output layer is learning to classify the images:
