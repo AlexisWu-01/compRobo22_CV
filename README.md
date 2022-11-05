@@ -32,18 +32,18 @@ The original dataset did not work well with overfitting (Extremely high accuracy
 #### Edge Detection
 I tried to use edge detection to move away the distraction from colors and background. Even though the resulting image looks good before compression, this does not work well because the resolution is even worse after reshaping and the "single line" edges:
 
-![Edge Detection](https://github.com/AlexisWu-01/compRobo22_comuter_vision/blob/main/demo/original_edge.png)
+![Edge Detection](https://github.com/AlexisWu-01/compRobo22_computer_vision/blob/main/demo/original_edge.png)
 
 #### Binary Filter
 The technique with binary image was to remove everything else but pixels with my skin-like color. This significantly reduces unnecessary information but the potential problem is consistency with users of different skin tones or even a similar background color could confuse the model.
 
- ![Binary Filter](https://github.com/AlexisWu-01/compRobo22_comuter_vision/blob/main/demo/binary.png)
+ ![Binary Filter](https://github.com/AlexisWu-01/compRobo22_computer_vision/blob/main/demo/binary.png)
  
 #### Edge Detection  with Binary Image
 I then tried combining edge detection on the binary image.
 It works slightly better than applying edge detection to the original image, but not as well as the binary image
 
-![Edge Detection on Binary Image](https://github.com/AlexisWu-01/compRobo22_comuter_vision/blob/main/demo/binary_edge.png)
+![Edge Detection on Binary Image](https://github.com/AlexisWu-01/compRobo22_computer_vision/blob/main/demo/binary_edge.png)
 
 
 ## Model with Transfer Learning
@@ -57,7 +57,7 @@ I tried using MobileNet_v3, inception_v3, and inception_v2_resnet as base models
 #### Feature Extraction
 I started with a frozen base model without its output layer and added a few output layers: global average pooling to convert the features of each image to one single column vector, a random dropout layer to prevent overfitting, and a dense layer to produce a prediction vector for each image (possibilities for 4 classes, and we take the class with the highest score as the predicted class). We could see after 10 training epochs, both the training and validation accuracy improved, which means that the output layer is learning to classify the images:
 
-![Training Output Layer Only](https://github.com/AlexisWu-01/compRobo22_comuter_vision/blob/main/demo/initial_outcome.png)
+![Training Output Layer Only](https://github.com/AlexisWu-01/compRobo22_computer_vision/blob/main/demo/initial_outcome.png)
 
 
 #### Fine Tuning
@@ -72,12 +72,12 @@ both the trainable layer number and variables around 100 yields a balanced resul
 ### More on Inception_resnet_v2
 Inception_resnet_v2 is a newer model published in 2017 based on inception architecture with integrated residual connections. Therefore it combines multiple-sized convolutional filters with residual connections which could avoid the degradation problem (The problem that deeper networks should allow a higher level of feature learning but instead causes more error.) and allow lower training time. 
 
-![Overview of Inception_Resnet_v2](https://github.com/AlexisWu-01/compRobo22_comuter_vision/blob/main/demo/inception_resnet_view.png )
+![Overview of Inception_Resnet_v2](https://github.com/AlexisWu-01/compRobo22_computer_vision/blob/main/demo/inception_resnet_view.png )
 
 ### Model Outcome
 Here is a video demo of the real-time prediction of the model:
 
-<a href="url"><img src="https://github.com/AlexisWu-01/compRobo22_comuter_vision/blob/main/demo/demo.gif" width="2000" ></a>
+<a href="url"><img src="https://github.com/AlexisWu-01/compRobo22_computer_vision/blob/main/demo/demo.gif" width="2000" ></a>
 
 We could see that the model predicts the outcome pretty well with some small fluctuations which would be filtered out if continuous detection is required to trigger the response.
 
@@ -97,11 +97,11 @@ I was able to use TensorFlow pre-trained model APIs for transfer learning which 
 Even though the model training process was time-consuming and a little boring, I was able to find many interesting facts that would be useful in my future machine-learning projects. We already talked about the selection of the number of trainable variables which was specific to transfer learning, here are some more general ideas in machine learning.
 1. Low dropout could lead to overfitting. I started with a 0.2 dropout rate in the prediction layer and it led to obvious overfitting as the training loss was so low and validation loss not really improving over epochs:
 2. 
- ![dropout = 0.2](https://github.com/AlexisWu-01/compRobo22_comuter_vision/blob/main/demo/low_dropout.png)
+ ![dropout = 0.2](https://github.com/AlexisWu-01/compRobo22_computer_vision/blob/main/demo/low_dropout.png)
  
  Therefore I turned to a 0.4 dropout rate which looks a little scary because we would be just cutting off 40% of the connections right before the final output. But it turned out much better:
  
- ![dropout = 0.4](https://github.com/AlexisWu-01/compRobo22_comuter_vision/blob/main/demo/fin_tuning.png)
+ ![dropout = 0.4](https://github.com/AlexisWu-01/compRobo22_computer_vision/blob/main/demo/fin_tuning.png)
  
 2. Epoch selection: I thought more epochs would make the neural network learn more features. But it turns out too many epochs could be not only time-consuming but also leads to overfitting. On a small dataset, around 20 epochs would be enough and we could utilize a callback function called `EarlyStopping` where we could stop the training before reaching set epochs if we do not see significant improvement over some period of training time. 
 3. Learning rate: Too low of a learning rate might make the training extremely slow and get stuck but making them too high could make us miss the optimal solution because the steps are too big.
@@ -138,7 +138,7 @@ In the future, if I were to implement some computer vision project, I would get 
 ### Object Tracking
 I wanted to achieve the pose tracking algorithm as in mediapipe: 
 
-![mediapipe hand](https://github.com/AlexisWu-01/compRobo22_comuter_vision/blob/main/demo/handpose_demo.png)
+![mediapipe hand](https://github.com/AlexisWu-01/compRobo22_computer_vision/blob/main/demo/handpose_demo.png)
 
 However, I could not find a pre-trained model for such pose detections. If there were more time I would try to build and train an object-tracking machine-learning model. 
 
