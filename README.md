@@ -63,7 +63,7 @@ Inception_resnet_v2 is a newer model published in 2017 based on inception archit
 
 ### Model Outcome
 Here is a video demo of the realtime prediction of the model:
-<a href="url"><img src="https://github.com/AlexisWu-01/compRobo22_comuter_vision/blob/main/demo/demo.giff" width="2000" ></a>
+<a href="url"><img src="https://github.com/AlexisWu-01/compRobo22_comuter_vision/blob/main/demo/demo.gif" width="2000" ></a>
 
 We could see that the model predicts the outcome pretty well with some small fluctuations which would be filtered out if a continuous detection is required to trigger the response.
 
